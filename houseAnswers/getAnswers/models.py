@@ -20,11 +20,3 @@ class Fields(models.Model):
 
     def __str__(self):
         return self.name
-
-class Response(models.Model):
-    key_phrase = models.CharField(max_length=100)
-    address = models.CharField(max_length=200)
-    zipcode = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.name
