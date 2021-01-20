@@ -29,7 +29,7 @@ These are the endpoints for the CRUD operations for the models Provider and Fiel
   **These are the required parameters**
   - address: number and street of house
   - zipcode: zipcode of house location
-  - key_phrase: Property to search on the 3erd party api. The allow one:
+  - key_phrase: Property to search on the 3erd party api. These are the allowed values:
     - air_conditioning: 
     - attic:
     - basement
@@ -62,4 +62,10 @@ These are the endpoints for the CRUD operations for the models Provider and Fiel
     - water:
     - year_built:
     - zoning:
+    
+ **These are optional parameters**
+   - unit: unit number of house
+   - state: state where the house is located
+   - city: city where the house is located
+    
   
