@@ -25,7 +25,7 @@ These are the endpoints for the CRUD operations for the models Provider and Fiel
     
   
   ### localhost:8000/api/answers
-  Endpoint to obtain the desired property of a house/apartment/building (refered for now on as house)
+  Endpoint to obtain the desired property of a house/apartment/building (refered for now on as house) only accepts GET Requests
   **These are the required parameters**
   - address: number and street of house
   - zipcode: zipcode of house location
