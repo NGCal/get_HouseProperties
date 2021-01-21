@@ -41,8 +41,15 @@ INSTALLED_APPS = [
     'rest_framework',
     'coverage',
     'lxml',
-    'tastypie'
+    'tastypie',
+    'rest_framework.authtoken',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

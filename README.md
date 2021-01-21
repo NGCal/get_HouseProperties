@@ -2,6 +2,7 @@
 API endpoint which obtains the requested property info of a house/apartment/building
 
 ## List of Endpoints
+  Note: To execute calls to any endpoint a token authentcation is required. For testing purposes this can be generated on the admin view or using python manage.py drf_create_token [user name] from the project console
 ### localhost:8000/api/provider/ and localhost:8000/api/fields/:
 These are the endpoints for the CRUD operations for the models Provider and Fields.
 #### POST Body Format for provider:
@@ -23,6 +24,7 @@ These are the endpoints for the CRUD operations for the models Provider and Fiel
         "provider": numeric, ID of the provider
     }
     
+     Note: Providers and Fields can be created through the admin view
   
   ### localhost:8000/api/answers
   Endpoint to obtain the desired property of a house/apartment/building (refered for now on as house) only accepts GET Requests

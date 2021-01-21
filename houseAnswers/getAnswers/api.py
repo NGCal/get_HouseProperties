@@ -9,7 +9,7 @@ import requests
 class ProviderViewSet(viewsets.ModelViewSet):
     queryset = Provider.objects.all().order_by("priority")
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
 
     serializer_class = ProviderSerializer
@@ -18,12 +18,14 @@ class ProviderViewSet(viewsets.ModelViewSet):
 class FieldsViewSet(viewsets.ModelViewSet):
     queryset = Fields.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
 
     serializer_class = FieldsSerializer
 
 class ResponseViewSet(APIView):
+
+    permission_classes = [permissions.IsAuthenticated]
      
     dto = {
             "success":None,
