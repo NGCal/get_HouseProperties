@@ -41,7 +41,7 @@ class genericProviderCall():
 
     url_cache_value = "house_provider"
     info_cache_value = url_cache_value +"_info"
-    auth_type="X-Api-Key"
+    auth_type="Authentication"
 
     def getResponse(self,request,url,params):
         provider_is_cached = (self.url_cache_value in request.session)
@@ -98,7 +98,7 @@ class genericProviderCall():
         field_name = self.urlFields["paramsValues"]["property_name"]
         key_phrase = self.urlFields["paramsValues"]["key_phrase"]
 
-        if field_name not in data.keys() or data[field_name] is None or data[field_name].strip().lower() == "null" or data[field_name].strip() == "":
+        if field_name not in data.keys() or data[field_name] is None or str(data[field_name]).strip().lower() == "null" or str(data[field_name]).strip() == "":
             return "Property not Found"
         data = {
             key_phrase:data[field_name]
