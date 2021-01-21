@@ -17,6 +17,9 @@ class ProviderAdmin(admin.ModelAdmin):
         }),
         ("Priority", {
             "fields": ["priority"],
+        }),
+        ("Authentication", {
+            "fields": ["auth_key"],
         })
     )
     

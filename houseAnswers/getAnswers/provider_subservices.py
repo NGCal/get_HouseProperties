@@ -33,5 +33,6 @@ class housedetailsProviderCall(genericProviderCall):
         },
         "separator":"%20"
     }
-    info_cache_value =  url_cache_value +"_info"       
+    info_cache_value =  url_cache_value +"_info"
+    auth_type="X-Api-Key"       
 

@@ -15,6 +15,7 @@ class genericProviderCall():
     These are the most frequently changed variables/methods:
         formatResponse(self,data): used to format the data send by the provider
         getPropertyValue(self,data): used to obtain the requested field
+        auth_type: used to set the authentication type on the request
     
     These are the usually changed variables/methods:
         urlFields["paramsNames"]: contains the names of the parameters that have to be send to the provider 
@@ -40,10 +41,13 @@ class genericProviderCall():
 
     url_cache_value = "house_provider"
     info_cache_value = url_cache_value +"_info"
+    auth_type="X-Api-Key"
 
     def getResponse(self,request,url,params):
         provider_is_cached = (self.url_cache_value in request.session)
         info_is_cached = (self.info_cache_value in request.session)
+
+        auth = params.pop("auth_key")
         
         self.urlFields["paramsValues"] = params
         f_url = self.formatURL(url)
@@ -52,7 +56,7 @@ class genericProviderCall():
         if (provider_is_cached and f_url != request.session[self.url_cache_value]) or not provider_is_cached or not info_is_cached:
             try:
                 request.session[self.url_cache_value] = f_url            
-                response = requests.get(f_url)
+                response = requests.get(f_url,headers={self.auth_type:auth})
                 request.session[self.info_cache_value] = response.json()
             except:
                 response = {"success": False, "data": f_url +" "+providerUnavailable().default_detail}
@@ -66,6 +70,11 @@ class genericProviderCall():
         
     def formatResponse(self,data):
         response = {}
+        if "property/details" not in data.keys():
+            response["success"] = False
+            response["data"] = data
+            print(data)
+            return response
         
         if data["property/details"]["api_code_description"] != "ok":
             response["success"] = False

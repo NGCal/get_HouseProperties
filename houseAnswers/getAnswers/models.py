@@ -4,6 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Provider(models.Model):
     name = models.CharField(max_length=100)
     url = models.URLField(max_length=200, unique=True)
+    auth_key = models.CharField(max_length=100, blank=True)
     priority = models.IntegerField(
         default=1,
         validators=[MaxValueValidator(9),MinValueValidator(1)]

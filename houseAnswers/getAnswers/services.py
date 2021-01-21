@@ -22,21 +22,24 @@ class responseService():
         kPhrase = params["key_phrase"]
         try:
             fields = Fields.objects.values().filter(key_phrase=kPhrase)
-            providers = list(Provider.objects.filter(id__in=fields.values("provider_id")).values("id","name","url").order_by("priority"))
+            providers = list(Provider.objects.filter(id__in=fields.values("provider_id")).values("id","name","url","auth_key").order_by("priority"))
+            
         except:
-            raise informationUnavailable()
+            response = {"success": False, "data":informationUnavailable().default_detail}
+            return response 
 
         
         for provider in providers:
             for field in fields:
                 if field["provider_id"] == provider["id"]:
                     params["property_name"] = field["name"]
-             
+            
+            params["auth_key"] = provider["auth_key"]
             response = self.providersClasses[provider["name"]].getResponse(request,provider["url"],params)
             if response["success"] == True:
                 break
         
-        #print("this")
+        
         params["address"] = og_addr
         params.pop("property_name")
         response["received_parameters"] = params
