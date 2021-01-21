@@ -8,6 +8,10 @@ django = "*"
 djangorestframework = "*"
 django-rest-knox = "*"
 requests = "*"
+coverage = "*"
+lxml = "*"
+defusedxml = "*"
+django-tastypie = "*"
 
 [dev-packages]
 

@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'getAnswers',
     'rest_framework',
+    'coverage',
+    'lxml',
+    'tastypie'
 ]
 
 MIDDLEWARE = [
