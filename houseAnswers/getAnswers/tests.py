@@ -379,7 +379,7 @@ class getResponseApi(APITestCase):
     
     def _populateProvandF(self):
         p1 = Provider.objects.create(name="PropertyKnowledge",url="https://26dba07c-dfe2-40c0-90bd-3b2c789f1600.mock.pstmn.io/location/house/info",priority="2")
-        p2 = Provider.objects.create(name="zillow Library",url="https://fd34f8e2-6052-483a-9b8e-f7ecdffe3711.mock.pstmn.io/home/details",priority="1",auth_key="PMAK-6009c2980e728d00379f8a45-e79c6092ce3471ee4624089615bf406923")
+        p2 = Provider.objects.create(name="zillow Library",url="https://fd34f8e2-6052-483a-9b8e-f7ecdffe3711.mock.pstmn.io/home/details",priority="1")
 
         Fields.objects.create(name="sewerSystem",key_phrase="sewer",provider=p1)
         Fields.objects.create(name="sewerSys",key_phrase="sewer",provider=p2)
