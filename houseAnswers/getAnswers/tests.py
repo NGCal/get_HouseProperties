@@ -312,7 +312,7 @@ class getResponseApi(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         url = "%s?key_phrase=sewer&address=10455 Yukatan Avenue&zipcode=80225&city=Amazing"%reverse('answers')
        
-        provider = Provider.objects.create(name="Good House Information",url="https://fd34f8e2-6052-483a-9b8e-f7ecdffe3711.mock.pstmn.io/home/details",priority="1",auth_key="PMAK-6009c2980e728d00379f8a45-e79c6092ce3471ee4624089615bf406923")
+        provider = Provider.objects.create(name="Good House Information",url="https://fd34f8e2-6052-483a-9b8e-f7ecdffe3711.mock.pstmn.io/home/details",priority="1")
         Fields.objects.create(name="sewer",key_phrase="sewer",provider=provider)
         
         response = self.client.get(url)
@@ -398,8 +398,8 @@ class providerandfieldsTest(TestCase):
     #Provider Tests
     def create_provider1(self,name="PropertyKnowledge",url="https://26dba07c-dfe2-40c0-90bd-3b2c789f1600.mock.pstmn.io/location/house/info",priority="2"):
         return Provider.objects.create(name=name,url=url,priority=priority,created_at=timezone.now())
-    def create_provider2(self,name="zillow Library",url="https://fd34f8e2-6052-483a-9b8e-f7ecdffe3711.mock.pstmn.io/home/details",priority="1",auth_key="PMAK-6009c2980e728d00379f8a45-e79c6092ce3471ee4624089615bf406923"):
-        return Provider.objects.create(name=name,url=url,priority=priority,created_at=timezone.now(),auth_key=auth_key)
+    def create_provider2(self,name="zillow Library",url="https://fd34f8e2-6052-483a-9b8e-f7ecdffe3711.mock.pstmn.io/home/details",priority="1"):
+        return Provider.objects.create(name=name,url=url,priority=priority,created_at=timezone.now())
     
     def test_providerA_creation(self):
         providerA = self.create_provider1()
