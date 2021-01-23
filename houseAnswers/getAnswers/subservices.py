@@ -30,11 +30,11 @@ class genericProviderCall():
 
     urlFields={
         "paramsNames":{
-            0:"address",
-            1:"zipcode",
-            2:"unit",
-            3:"state",
-            4:"city"
+            "address":"address",
+            "zipcode":"zipcode",
+            "unit":"unit",
+            "state":"state",
+            "city":"city"
         },
         "separator":"%20"
     }
@@ -56,10 +56,10 @@ class genericProviderCall():
         if (provider_is_cached and f_url != request.session[self.url_cache_value]) or not provider_is_cached or not info_is_cached:
             try:
                 request.session[self.url_cache_value] = f_url            
-                response = requests.get(f_url,headers={self.auth_type:auth})
+                response = requests.get(f_url,headers={self.auth_type:auth},timeout=30)
                 request.session[self.info_cache_value] = response.json()
             except:
-                response = {"success": False, "data": f_url +" "+providerUnavailable().default_detail}
+                response = {"success": False, "data": f_url +" "+providerUnavailable().default_detail, "code":providerUnavailable().status_code}
                 return response 
         
         response = self.formatResponse(request.session[self.info_cache_value])
@@ -70,27 +70,33 @@ class genericProviderCall():
         
     def formatResponse(self,data):
         response = {}
-        if "property/details" not in data.keys():
+    
+        try:
+            if data["property/details"]["api_code_description"] != "ok":
+                response["success"] = False
+                response["data"] = data
+                return response
+
+            data = data["property/details"]["result"]["property"]
+        except:
             response["success"] = False
-            response["data"] = data
+            response["data"] = structureChangedAPI().default_detail
+            response["code"] = structureChangedAPI().status_code
             print(data)
             return response
         
-        if data["property/details"]["api_code_description"] != "ok":
-            response["success"] = False
-            response["data"] = data
-            return response
-
-        data = data["property/details"]["result"]["property"]
+        
         data = self.getPropertyValue(data)
 
         if data == "Property not Found":
             response["success"] = False
             response["data"] = data
+            response["code"] = 404
             return response
         
         response["success"] = True
         response["data"] = data
+        response["code"] = 200
         return response
         
 
@@ -113,13 +119,11 @@ class genericProviderCall():
 
             paramsvalues["address"]= self.replaceSpaces(paramsvalues["address"])
             f_url = url +"?"
-            pos = 0
 
             for key in paramsvalues.keys():
                 if key == "key_phrase" or key == "property_name":
                     continue
-                f_url = f_url + paramsnames[pos] + "=" + paramsvalues[key] +"&"
-                pos = pos + 1
+                f_url = f_url + paramsnames[key] + "=" + paramsvalues[key] +"&"
         
         except:
             return "Failed to build URL"

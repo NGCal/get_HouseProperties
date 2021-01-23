@@ -3,4 +3,4 @@ from django.urls import path, include
 from .api import ResponseViewSet
 
 
-urlpatterns = [path('api/answers', ResponseViewSet.as_view())]
+urlpatterns = [path('api/answers', ResponseViewSet.as_view(), name='answers')]

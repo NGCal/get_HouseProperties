@@ -4,6 +4,7 @@ from .models import Provider,Fields
 from rest_framework import viewsets, permissions
 from .serializers import ProviderSerializer, FieldsSerializer,ResponseFormatter
 from .services import *
+from .exceptions import *
 import requests
 
 class ProviderViewSet(viewsets.ModelViewSet):
@@ -47,18 +48,20 @@ class ResponseViewSet(APIView):
         self.dto["request"] = params
 
         if not self._validateData(params):
-            self.dto["success"] = False
-            self.dto["message"] = "Parameters validation failed or requested key_phrase is not available"
-            
-            data = ResponseFormatter(self.dto).data
-            return JsonResponse(data, status=400)
+            response = {
+                "sucess":False,
+                "data":parametersValidationFailed().default_detail,
+                "received_parameters":params
+            }
+            return JsonResponse(response, status=parametersValidationFailed().status_code)
         
         response = responseService().getResponse(request,params)
+        status = response.pop("code")
 
         if not response["success"]:
-            return JsonResponse(response, status=404)
+            return JsonResponse(response, status=status)
 
-        return JsonResponse(response, status=200)
+        return JsonResponse(response, status=status)
     
     def _validateData(self,params):
         if params["key_phrase"] is None or params["address"] is None or params["zipcode"] is None:
